@@ -56,7 +56,7 @@ Here's an example using waltz, crate, jayq, and fetch:
     (transition me :update)
 
     (append $container $elem)
-    state))
+    me))
 
 (add-metric {:label "Views today" :klass "gray"})
 (add-metric {:label "Signups today" :delay 30000 :klass "gray"})
@@ -68,6 +68,6 @@ Here's an example using waltz, crate, jayq, and fetch:
 
 ## License
 
-Copyright (C) 2011 FIXME
+Copyright (C) 2011 Chris Granger
 
 Distributed under the Eclipse Public License, the same as Clojure.
