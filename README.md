@@ -1,7 +1,7 @@
 # waltz
 
 Waltz is a ClojureScript library that helps manage state in client-side applications using
-finite state machines.
+non-deterministic finite state machines.
 
 ## Usage
 
