@@ -20,11 +20,11 @@
    :constraints []})
 
 (defn machine [& [n]]
-  (atom {:debug true 
+  (atom {:debug true
          :name (name n)
          :current #{}
          :states {}
-         :transitions {}}))
+         :events {}}))
 
 (defn get-name [sm]
   (get-in-sm sm [:name]))
@@ -47,14 +47,14 @@
 (defn has-state? [sm state]
   (get-in-sm sm [:states state]))
 
-(defn has-transition? [sm trans]
-  (get-in-sm sm [:transitions trans]))
+(defn has-event? [sm trans]
+  (get-in-sm sm [:events trans]))
 
 (defn add-state [sm name v]
   (assoc-sm sm [:states name] v))
 
-(defn add-transition [sm name v]
-  (assoc-sm sm [:transitions name] v))
+(defn add-event [sm name v]
+  (assoc-sm sm [:events name] v))
 
 (defn in* [state fn]
   (update-in state [:in] conj fn))
@@ -99,9 +99,9 @@
   (apply unset sm to-unset context)
   (apply set sm to-set context))
 
-(defn transition [sm ts & context]
+(defn trigger [sm ts & context]
   (doseq [trans (->coll ts)]
-    (when-let [t (get-in-sm sm [:transitions trans])] 
+    (when-let [t (get-in-sm sm [:events trans])]
       (let [res (apply t context)]
         (debug-log sm "(trans " (str trans) ") -> " (boolean res) " :: context " (pr-str context))))))
 

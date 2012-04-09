@@ -6,10 +6,10 @@
                 ~@body)]
      (waltz.state/add-state ~sm ~name s#)))
 
-(defmacro deftrans
+(defmacro defevent
   [sm name params & body]
-  `(waltz.state/add-transition ~sm ~name (fn ~params
-                                           ~@body)))
+  `(waltz.state/add-event ~sm ~name (fn ~params
+                                      ~@body)))
 
 (defmacro in [sm & body]
   (if (second body)

@@ -13,7 +13,7 @@ Here's an example using waltz, crate, jayq, and fetch:
             [crate.core :as crate]
             [fetch.lazy-store :as store])
   (:use [jayq.core :only [append $ find show hide inner add-class remove-class]]
-        [waltz.state :only [transition]])
+        [waltz.state :only [trigger]])
   (:use-macros [waltz.macros :only [in out defstate deftrans]]
                [crate.macros :only [defpartial]]))
 
@@ -35,25 +35,25 @@ Here's an example using waltz, crate, jayq, and fetch:
         delay (or (:delay params) 10000)
         me (state/machine (:label params))]
 
-    (defstate me :loading 
+    (defstate me :loading
       (in [] (show $loading))
       (out [] (hide $loading)))
 
     (defstate me :normal
-      (in [v] 
+      (in [v]
         (inner $value v)
-        (wait delay #(transition me :update))))
+        (wait delay #(trigger me :update))))
 
-    (deftrans me :update []
+    (defevent me :update []
       (state/set me :loading)
-      (store/latest [:metrics (:metric params)] 
-                    #(transition me :set %)))
+      (store/latest [:metrics (:metric params)]
+                    #(trigger me :set %)))
 
-    (deftrans me :set [v]
+    (defevent me :set [v]
       (state/unset me :loading)
       (state/set me :normal v))
 
-    (transition me :update)
+    (trigger me :update)
 
     (append $container $elem)
     me))
