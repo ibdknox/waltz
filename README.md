@@ -14,7 +14,7 @@ Here's an example using waltz, crate, jayq, and fetch:
             [fetch.lazy-store :as store])
   (:use [jayq.core :only [append $ find show hide inner add-class remove-class]]
         [waltz.state :only [trigger]])
-  (:use-macros [waltz.macros :only [in out defstate deftrans]]
+  (:use-macros [waltz.macros :only [in out defstate defevent]]
                [crate.macros :only [defpartial]]))
 
 (defn wait [ms func]
