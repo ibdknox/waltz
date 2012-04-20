@@ -106,4 +106,4 @@
         (debug-log sm "(trans " (str trans) ") -> " (boolean res) " :: context " (pr-str context))))))
 
 (defn set-debug [sm dbg]
-  (assoc-sm sm :debug dbg))
+  (assoc-sm sm [:debug] dbg))
